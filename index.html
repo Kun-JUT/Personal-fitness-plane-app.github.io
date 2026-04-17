@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitForge — Персональні програми тренувань</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%230f172a'/%3E%3Cpath fill='%23B8F55A' d='M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z'/%3E%3C/svg%3E" />
+  <link href="global.css" rel="stylesheet"/>
+  <link href="styles/index.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="site-wrapper">
+
+    <picture>
+      <source srcset="images/backDecstop.png" media="(min-width: 768px)"/>
+      <img alt="Фон" class="hero-bg" src="images/backMobile.png"/>
+    </picture>
+    <div class="hero-overlay"></div>
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="nav-logo">FIT<span>FORGE</span></a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link active">Головна</a>
+          <a href="form.html" class="nav-link">Програма</a>
+        </div>
+        <button class="burger" id="burger" aria-label="Меню">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="mobile-link">Головна</a>
+        <a href="form.html" class="mobile-link">Програма</a>
+      </div>
+    </nav>
+
+    <main class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">AI-генератор тренувань</div>
+        <h1 class="hero-title">Підбери ідеальну<br/><span class="accent">тренувальну</span><br/>програму</h1>
+        <p class="hero-sub">Індивідуальний план за твоєю метою, рівнем і графіком. Без зайвого — лише те, що працює.</p>
+        <a href="form.html" class="cta-btn">
+          <span>Почати підбір</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num">4</span><span class="stat-label">Типи програм</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">3</span><span class="stat-label">Рівні підготовки</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">5</span><span class="stat-label">Днів на тиждень</span></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="social-row">
+          <a href="#" class="social-link"><img src="images/e9316cf4dda8b50788cf26ee84db2fafadf59609.png" alt="Instagram" width="30" height="30"/></a>
+          <a href="#" class="social-link"><img src="images/a2c61d3c0aee930e15b15da8ca434f21a89ccf74.png" alt="Telegram" width="32" height="32"/></a>
+          <a href="#" class="social-link"><img src="images/a0adb570978121f0652c60f0b574f5011d1c7cd4.png" alt="Facebook" width="32" height="32"/></a>
+          <a href="#" class="social-link"><img src="images/243cf2d3838d8413618f58ac0798be862192fe25.png" alt="TikTok" width="28" height="28"/></a>
+        </div>
+        <p class="footer-copy">© 2025 FitForge · Privacy Policy</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('mobile-menu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      menu.classList.toggle('open');
+    });
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+    });
+  </script>
+</body>
+</html>

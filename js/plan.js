@@ -23,12 +23,17 @@ const TYPE_LABELS = {
 const LEVEL_UK = {
   beginner: 'початковий', intermediate: 'середній', advanced: 'просунутий'
 };
-const PLAN_FILES = {
-  fullbody: 'plans/fullbody.json',
-  upperlower: 'plans/upperlower.json',
-  ptn: 'plans/ptn.json',
-  split: 'plans/split.json'
-};
+// ---- Plan files by type and gender ----
+function getPlanFile(type, gender) {
+  const genderSuffix = gender === 'female' ? '_female' : '';
+  const files = {
+    fullbody: 'plans/fullbody' + genderSuffix + '.json',
+    upperlower: 'plans/upperlower' + genderSuffix + '.json',
+    ptn: 'plans/ptn' + genderSuffix + '.json',
+    split: 'plans/split' + genderSuffix + '.json'
+  };
+  return files[type] || 'plans/fullbody.json';
+}
 
 // ---- Day type → badge class ----
 function getDayBadge(title) {
@@ -36,7 +41,8 @@ function getDayBadge(title) {
   const t = title.toLowerCase();
   if (t.includes('товкай') || t.includes('push') || t.includes('груди') || t.includes('chest')) return { cls: 'badge-push', label: 'Товкай' };
   if (t.includes('тягни') || t.includes('pull') || t.includes('спина') || t.includes('back'))   return { cls: 'badge-pull', label: 'Тягни' };
-  if (t.includes('ноги') || t.includes('leg'))  return { cls: 'badge-legs', label: 'Ноги' };
+  if (t.includes('ніг') || t.includes('ноги') || t.includes('leg'))  return { cls: 'badge-legs', label: 'Ноги' };
+  if (t.includes('сідниц') || t.includes('ягодиц') || t.includes('glute')) return { cls: 'badge-legs', label: 'Сідниці' };
   if (t.includes('верх') || t.includes('upper')) return { cls: 'badge-upper', label: 'Верх' };
   if (t.includes('низ') || t.includes('lower'))  return { cls: 'badge-lower', label: 'Низ' };
   if (t.includes('фулбоді') || t.includes('full')) return { cls: 'badge-full', label: 'Full Body' };
@@ -48,7 +54,8 @@ function getMuscle(name) {
   const n = name.toLowerCase();
   if (/жим|груд|chest|bench|push/.test(n))       return { label: 'Груди',   cls: 'muscle-chest' };
   if (/тяг|спин|підтяг|row|pull|back/.test(n))   return { label: 'Спина',   cls: 'muscle-back' };
-  if (/присід|випад|ноги|squat|lunge|leg/.test(n)) return { label: 'Ноги',  cls: 'muscle-legs' };
+  if (/присід|випад|squat|lunge/.test(n))         return { label: 'Ноги',  cls: 'muscle-legs' };
+  if (/сідниц|ягодиц|glute|жоп|стегно|hip/.test(n)) return { label: 'Сідниці', cls: 'muscle-glutes' };
   if (/плеч|shoulder|жим стоячи|Arnold/.test(n)) return { label: 'Плечі',   cls: 'muscle-shoulders' };
   if (/біцеп|трицеп|arm|підйом на біц/.test(n))  return { label: 'Руки',    cls: 'muscle-arms' };
   if (/прес|кор|планк|скруч|core|ab/.test(n))    return { label: 'Кор',     cls: 'muscle-core' };
@@ -119,8 +126,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Loading animation
   await runLoader();
 
-  // Load plan JSON
-  const planData = await loadPlan(data.type);
+  // Load plan JSON (pass gender to select correct file)
+  const planData = await loadPlan(data.type, data.gender);
   const planKey = buildPlanKey(data);
   const rawDays = extractDays(planKey, planData, data.days);
 
@@ -165,9 +172,8 @@ async function runLoader() {
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ---- Load plan JSON ----
-async function loadPlan(type) {
-  const path = PLAN_FILES[type];
-  if (!path) return {};
+async function loadPlan(type, gender) {
+  const path = getPlanFile(type, gender);
   try {
     const res = await fetch(path);
     if (!res.ok) return {};
@@ -180,6 +186,10 @@ async function loadPlan(type) {
 
 // ---- Build plan key ----
 function buildPlanKey(data) {
+  // Для жінок використовуємо префікс "female_"
+  if (data.gender === 'female') {
+    return `female_${LEVEL_UK[data.level] || data.level}_${data.days}_${data.goal}`;
+  }
   return `${LEVEL_UK[data.level] || data.level}_${data.days}_${data.goal}`;
 }
 
@@ -188,10 +198,27 @@ function extractDays(planKey, planData, daysPerWeek) {
   // Try exact key first
   let plan = planData && planData[planKey];
 
-  // Fallback: find closest match by level + goal
+  // Fallback: find closest match by level + goal + gender
   if (!plan || !plan.length) {
-    const [level, , goal] = planKey.split('_');
-    const fallbackKey = Object.keys(planData || {}).find(k => k.startsWith(level) && k.endsWith(goal));
+    const parts = planKey.split('_');
+    // Remove 'female_' prefix if present for matching
+    const level = parts.includes('female') ? parts[1] : parts[0];
+    const goal = parts[parts.length - 1];
+    const genderPrefix = planKey.startsWith('female_') ? 'female_' : '';
+
+    const fallbackKey = Object.keys(planData || {}).find(k =>
+      k.startsWith(genderPrefix + level) && k.endsWith(goal)
+    );
+    if (fallbackKey) plan = planData[fallbackKey];
+  }
+
+  // Final fallback: any plan with matching level and goal
+  if (!plan || !plan.length) {
+    const level = planKey.startsWith('female_') ? planKey.split('_')[1] : planKey.split('_')[0];
+    const goal = planKey.split('_').pop();
+    const fallbackKey = Object.keys(planData || {}).find(k =>
+      k.includes(level) && k.endsWith(goal)
+    );
     if (fallbackKey) plan = planData[fallbackKey];
   }
 

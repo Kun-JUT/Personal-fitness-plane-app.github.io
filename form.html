@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitForge — Налаштування програми</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%230f172a'/%3E%3Cpath fill='%23B8F55A' d='M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z'/%3E%3C/svg%3E" />
+  <link href="global.css" rel="stylesheet"/>
+  <link href="styles/form.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="site-wrapper">
+    <picture>
+      <source srcset="images/backDecstop.png" media="(min-width: 768px)"/>
+      <img alt="Фон" class="hero-bg" src="images/backMobile.png"/>
+    </picture>
+    <div class="hero-overlay"></div>
+
+    <nav class="navbar scrolled" id="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="nav-logo">FIT<span>FORGE</span></a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Головна</a>
+          <a href="form.html" class="nav-link active">Програма</a>
+        </div>
+        <button class="burger" id="burger" aria-label="Меню">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="mobile-link">Головна</a>
+        <a href="form.html" class="mobile-link">Програма</a>
+      </div>
+    </nav>
+
+    <!-- Progress bar (mobile wizard) -->
+    <div class="wizard-bar" id="wizard-bar">
+      <div class="wizard-steps">
+        <div class="wstep active" data-step="0">
+          <div class="wstep-dot"></div>
+          <span>Ціль</span>
+        </div>
+        <div class="wstep-line"></div>
+        <div class="wstep" data-step="1">
+          <div class="wstep-dot"></div>
+          <span>Параметри</span>
+        </div>
+        <div class="wstep-line"></div>
+        <div class="wstep" data-step="2">
+          <div class="wstep-dot"></div>
+          <span>Деталі</span>
+        </div>
+      </div>
+    </div>
+
+    <main class="form-main">
+      <div class="form-container">
+
+        <div class="form-header">
+          <h1 class="form-title">Налаштуй<br/><span class="accent">свою програму</span></h1>
+          <p class="form-subtitle">Відповідай на питання — отримай точний план</p>
+        </div>
+
+        <!-- STEP 0: Ціль + Стать -->
+        <section class="form-step active" data-step="0">
+          <div class="form-card">
+
+            <div class="section-block">
+              <p class="section-label">Твоя ціль</p>
+              <div class="options-grid goal-grid">
+                <button class="opt-btn" data-group="goal" data-value="mass">
+                  <span class="opt-icon">💪</span>
+                  <span class="opt-text">Набір маси</span>
+                </button>
+                <button class="opt-btn" data-group="goal" data-value="relief">
+                  <span class="opt-icon">🔥</span>
+                  <span class="opt-text">Схуднення</span>
+                </button>
+                <button class="opt-btn" data-group="goal" data-value="strength">
+                  <span class="opt-icon">⚡</span>
+                  <span class="opt-text">Сила</span>
+                </button>
+                <button class="opt-btn" data-group="goal" data-value="support">
+                  <span class="opt-icon">🎯</span>
+                  <span class="opt-text">Підтримка форми</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="section-block">
+              <p class="section-label">Стать</p>
+              <div class="options-row gender-row">
+                <button class="opt-btn gender-btn male-btn" data-group="gender" data-value="male">
+                  <span class="opt-icon">♂</span>
+                  <span class="opt-text">Чоловік</span>
+                </button>
+                <button class="opt-btn gender-btn female-btn" data-group="gender" data-value="female">
+                  <span class="opt-icon">♀</span>
+                  <span class="opt-text">Жінка</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- STEP 1: Рівень + Тип -->
+        <section class="form-step" data-step="1">
+          <div class="form-card">
+
+            <div class="section-block">
+              <p class="section-label">Рівень підготовки</p>
+              <div class="level-row">
+                <button class="level-btn" data-group="level" data-value="beginner">
+                  <span class="level-icon">🌱</span>
+                  <span class="level-name">Початковий</span>
+                  <span class="level-desc">До 1 року тренувань</span>
+                </button>
+                <button class="level-btn" data-group="level" data-value="intermediate">
+                  <span class="level-icon">🏋️</span>
+                  <span class="level-name">Середній</span>
+                  <span class="level-desc">1–3 роки тренувань</span>
+                </button>
+                <button class="level-btn" data-group="level" data-value="advanced">
+                  <span class="level-icon">🔱</span>
+                  <span class="level-name">Просунутий</span>
+                  <span class="level-desc">3+ роки тренувань</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="section-block">
+              <p class="section-label">Тип програми</p>
+              <div class="type-grid">
+                <button class="type-card" data-group="type" data-value="fullbody">
+                  <span class="type-tag tag-full">Full Body</span>
+                  <span class="type-name">Повне тіло</span>
+                  <span class="type-desc">Кожне тренування — всі групи м'язів</span>
+                </button>
+                <button class="type-card" data-group="type" data-value="upperlower">
+                  <span class="type-tag tag-split">Верх / Низ</span>
+                  <span class="type-name">Верх-Низ</span>
+                  <span class="type-desc">Чергування верхньої та нижньої частин</span>
+                </button>
+                <button class="type-card" data-group="type" data-value="ptn">
+                  <span class="type-tag tag-ptn">PPL</span>
+                  <span class="type-name">Тягни / Товкай / Ноги</span>
+                  <span class="type-desc">Push-Pull-Legs — класична схема</span>
+                </button>
+                <button class="type-card" data-group="type" data-value="split">
+                  <span class="type-tag tag-split2">Split</span>
+                  <span class="type-name">Спліт</span>
+                  <span class="type-desc">Окремі м'язові групи на день</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- STEP 2: Дні -->
+        <section class="form-step" data-step="2">
+          <div class="form-card">
+
+            <div class="section-block">
+              <p class="section-label">Кількість тренувань на тиждень</p>
+              <div class="days-row">
+                <button class="day-btn" data-group="days" data-value="1">1</button>
+                <button class="day-btn" data-group="days" data-value="2">2</button>
+                <button class="day-btn" data-group="days" data-value="3">3</button>
+                <button class="day-btn" data-group="days" data-value="4">4</button>
+                <button class="day-btn" data-group="days" data-value="5">5</button>
+              </div>
+              <p class="days-hint" id="days-hint">Оберіть кількість тренувань</p>
+            </div>
+
+            <!-- Summary preview -->
+            <div class="summary-card" id="summary-card">
+              <p class="summary-title">Твій запит</p>
+              <div class="summary-tags" id="summary-tags"></div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="form-nav">
+          <button class="btn-ghost" id="btn-back" style="visibility:hidden">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 13L5 8l5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Назад
+          </button>
+          <div class="step-dots" id="step-dots">
+            <span class="sdot active"></span>
+            <span class="sdot"></span>
+            <span class="sdot"></span>
+          </div>
+          <button class="btn-primary" id="btn-next">
+            Далі
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- Validation error -->
+        <p class="form-error" id="form-error"></p>
+
+      </div>
+    </main>
+
+    <div class="toast-container" id="toast-container"></div>
+  </div>
+
+  <script src="js/form.js"></script>
+  <script>
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('mobile-menu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      menu.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

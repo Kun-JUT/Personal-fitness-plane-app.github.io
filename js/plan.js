@@ -110,6 +110,10 @@ function showToast(msg, type = '') {
 document.addEventListener('DOMContentLoaded', async () => {
 
   const data = JSON.parse(localStorage.getItem('fitforge_prefs') || 'null');
+  // Immediately clear — plan owns data in memory from here.
+  // form.html will always open clean regardless of how user navigates there.
+  localStorage.removeItem('fitforge_prefs');
+
   if (!data) {
     alert('Немає даних. Спочатку заповніть форму.');
     window.location.href = 'form.html';
@@ -516,11 +520,5 @@ function setupExport(data, days) {
   document.getElementById('btn-share')?.addEventListener('click', () => sharePlan(data));
 }
 
-// ---- Clear prefs when navigating back to form ----
-document.querySelectorAll('a[href="form.html"]').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    localStorage.removeItem('fitforge_prefs');
-    window.location.href = 'form.html';
-  });
-});
+// fitforge_prefs is cleared immediately after read (see DOMContentLoaded above).
+// No click-handler needed — form.html always opens with no saved state.

@@ -40,9 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.classList.add('selected');
     selections[group] = group === 'days' ? parseInt(value) : value;
 
-    // Save to localStorage
-    localStorage.setItem('fitforge_prefs', JSON.stringify(selections));
-
     clearError();
     updateDaysHint();
     updateSummary();

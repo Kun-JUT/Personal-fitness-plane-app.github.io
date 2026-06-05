@@ -1,0 +1,190 @@
+/* ===== AUTH.CSS ===== */
+
+.auth-main {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px 40px;
+  min-height: 100vh;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(17,17,17,0.82);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--clr-border2);
+  border-radius: var(--radius-xl);
+  padding: 40px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+  animation: slideUp 0.4s cubic-bezier(.22,.68,0,1.2) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Logo */
+.auth-logo { text-align: center; margin-bottom: 4px; }
+.auth-logo-text {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+  color: var(--clr-text);
+}
+.auth-logo-text span { color: var(--clr-accent); }
+
+/* Title */
+.auth-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  letter-spacing: 0.05em;
+  color: var(--clr-text);
+  text-align: center;
+  margin: 0;
+}
+.auth-subtitle {
+  font-size: 0.82rem;
+  color: var(--clr-muted);
+  text-align: center;
+  margin-top: -8px;
+}
+
+/* Google button */
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 20px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--clr-border2);
+  border-radius: var(--radius-md);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-size: 0.87rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.btn-google:hover {
+  background: rgba(255,255,255,0.11);
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-1px);
+}
+
+/* Divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--clr-muted2);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--clr-border);
+}
+
+/* Fields */
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.auth-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--clr-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.auth-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition);
+}
+.auth-input::placeholder { color: var(--clr-muted2); }
+.auth-input:focus {
+  border-color: var(--clr-accent);
+  background: rgba(184,245,90,0.04);
+}
+
+/* Password toggle */
+.auth-password-wrap {
+  position: relative;
+}
+.auth-password-wrap .auth-input {
+  padding-right: 42px;
+}
+.btn-toggle-pw {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--clr-muted);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+.btn-toggle-pw:hover { color: var(--clr-text); }
+
+/* Error */
+.auth-error {
+  font-size: 0.8rem;
+  color: #fca5a5;
+  min-height: 18px;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+/* Submit */
+.auth-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 14px;
+  font-size: 0.92rem;
+  margin-top: 4px;
+}
+
+/* Toggle link */
+.auth-toggle {
+  background: none;
+  border: none;
+  color: var(--clr-accent);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  padding: 4px;
+  opacity: 0.85;
+  transition: opacity var(--transition);
+}
+.auth-toggle:hover { opacity: 1; }
+
+@media (max-width: 480px) {
+  .auth-card { padding: 32px 22px 28px; }
+}

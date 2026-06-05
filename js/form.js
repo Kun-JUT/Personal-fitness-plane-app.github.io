@@ -1,4 +1,12 @@
 // ===== FORM.JS — Wizard logic =====
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ---- Auth guard ----
+onAuthStateChanged(auth, user => {
+  if (!user) window.location.href = "auth.html";
+});
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -33,10 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const group = btn.dataset.group;
     const value = btn.dataset.value;
 
-    // Deselect siblings
     document.querySelectorAll(`[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
-
-    // Select this
     btn.classList.add('selected');
     selections[group] = group === 'days' ? parseInt(value) : value;
 
@@ -70,17 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateNav() {
-    // Back button
     btnBack.style.visibility = currentStep === 0 ? 'hidden' : 'visible';
-
-    // Next / Submit
     if (currentStep === TOTAL_STEPS - 1) {
       btnNext.innerHTML = `Згенерувати <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3l5 5-5 5M13 8H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     } else {
       btnNext.innerHTML = `Далі <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     }
-
-    // Dots
     dots.forEach((d, i) => d.classList.toggle('active', i === currentStep));
   }
 
@@ -98,24 +98,17 @@ document.addEventListener('DOMContentLoaded', () => {
     ['level', 'type'],
     ['days']
   ];
-
   const fieldLabels = {
-    goal: 'ціль',
-    gender: 'стать',
-    level: 'рівень підготовки',
-    type: 'тип програми',
-    days: 'кількість тренувань'
+    goal: 'ціль', gender: 'стать',
+    level: 'рівень підготовки', type: 'тип програми', days: 'кількість тренувань'
   };
 
   function validateStep(s) {
-    const required = stepFields[s];
-    const missing = required.filter(f => selections[f] === undefined);
+    const missing = stepFields[s].filter(f => selections[f] === undefined);
     if (missing.length) {
       showError('Будь ласка, оберіть: ' + missing.map(f => fieldLabels[f]).join(', '));
-      // Highlight missing groups
       missing.forEach(group => {
-        const btns = document.querySelectorAll(`[data-group="${group}"]`);
-        btns.forEach(b => {
+        document.querySelectorAll(`[data-group="${group}"]`).forEach(b => {
           b.style.borderColor = '#fca5a5';
           setTimeout(() => { b.style.borderColor = ''; }, 2000);
         });
@@ -125,14 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
-  function showError(msg) {
-    errEl.textContent = msg;
-    errEl.style.opacity = '1';
-  }
-  function clearError() {
-    errEl.textContent = '';
-    errEl.style.opacity = '0';
-  }
+  function showError(msg) { errEl.textContent = msg; errEl.style.opacity = '1'; }
+  function clearError()   { errEl.textContent = '';  errEl.style.opacity = '0'; }
 
   // ---- Days hint ----
   const dayHints = {
@@ -143,59 +130,53 @@ document.addEventListener('DOMContentLoaded', () => {
     5: '5 днів — інтенсивний графік, потрібен досвід'
   };
   function updateDaysHint() {
-    if (selections.days && daysHint) {
-      daysHint.textContent = dayHints[selections.days] || '';
-    }
+    if (selections.days && daysHint) daysHint.textContent = dayHints[selections.days] || '';
   }
 
-  // ---- Summary (step 2) ----
+  // ---- Summary ----
   const labels = {
-    goal: { mass: '💪 Набір маси', relief: '🔥 Схуднення', strength: '⚡ Сила', support: '🎯 Підтримка' },
+    goal:   { mass: '💪 Набір маси', relief: '🔥 Схуднення', strength: '⚡ Сила', support: '🎯 Підтримка' },
     gender: { male: '♂ Чоловік', female: '♀ Жінка' },
-    level: { beginner: '🌱 Початковий', intermediate: '🏋️ Середній', advanced: '🔱 Просунутий' },
-    type: { fullbody: 'Full Body', upperlower: 'Верх-Низ', ptn: 'PPL', split: 'Спліт' }
+    level:  { beginner: '🌱 Початковий', intermediate: '🏋️ Середній', advanced: '🔱 Просунутий' },
+    type:   { fullbody: 'Full Body', upperlower: 'Верх-Низ', ptn: 'PPL', split: 'Спліт' }
   };
-
   function updateSummary() {
     if (!summaryCard) return;
-    const fields = ['goal', 'gender', 'level', 'type'];
-    const tags = fields
+    const tags = ['goal','gender','level','type']
       .filter(f => selections[f])
       .map(f => `<span class="stag">${labels[f][selections[f]] || selections[f]}</span>`);
-
-    if (selections.days) {
-      tags.push(`<span class="stag">📅 ${selections.days} дн/тижд.</span>`);
-    }
-
-    if (tags.length) {
-      summaryTags.innerHTML = tags.join('');
-      summaryCard.classList.add('visible');
-    } else {
-      summaryCard.classList.remove('visible');
-    }
+    if (selections.days) tags.push(`<span class="stag">📅 ${selections.days} дн/тижд.</span>`);
+    if (tags.length) { summaryTags.innerHTML = tags.join(''); summaryCard.classList.add('visible'); }
+    else summaryCard.classList.remove('visible');
   }
 
   // ---- Submit ----
-  function submitForm() {
+  async function submitForm() {
     if (!validateStep(currentStep)) return;
-
-    // Final check: all required
     const allRequired = ['goal', 'gender', 'level', 'type', 'days'];
-    const missing = allRequired.filter(f => selections[f] === undefined);
-    if (missing.length) {
-      showError('Будь ласка, заповніть усі поля');
-      return;
+    if (allRequired.some(f => selections[f] === undefined)) {
+      showError('Будь ласка, заповніть усі поля'); return;
     }
 
-    localStorage.setItem('fitforge_prefs', JSON.stringify(selections));
-
-    // Loading state
-    btnNext.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="animation:spin 0.8s linear infinite"><path d="M8 2a6 6 0 1 0 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Генеруємо...`;
+    btnNext.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="animation:spin 0.8s linear infinite"><path d="M8 2a6 6 0 1 0 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Зберігаємо...`;
     btnNext.disabled = true;
 
-    setTimeout(() => {
-      window.location.href = 'plan.html';
-    }, 600);
+    // Зберегти в Firestore (якщо залогінений)
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        await addDoc(collection(db, "users", user.uid, "plans"), {
+          ...selections,
+          createdAt: serverTimestamp()
+        });
+      } catch (e) {
+        console.warn("Firestore write failed:", e);
+      }
+    }
+
+    // Транспорт на plan.html
+    localStorage.setItem('fitforge_prefs', JSON.stringify(selections));
+    window.location.href = 'plan.html';
   }
 
   // Spin animation

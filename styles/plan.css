@@ -503,3 +503,20 @@
   .export-bar { flex-direction: column; align-items: stretch; }
   .export-btn { justify-content: center; }
 }
+
+/* Favorite button on exercise cards */
+.ex-fav-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--clr-muted2);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: color var(--transition), transform var(--transition);
+  flex-shrink: 0;
+}
+.ex-fav-btn:hover { color: #fca5a5; transform: scale(1.15); }
+.ex-fav-btn.fav-active { color: #fca5a5; }
+

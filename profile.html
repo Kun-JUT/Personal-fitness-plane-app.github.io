@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitForge — Мій профіль</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%230f172a'/%3E%3Cpath fill='%23B8F55A' d='M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z'/%3E%3C/svg%3E"/>
+  <link href="global.css" rel="stylesheet"/>
+  <link href="styles/profile.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="site-wrapper">
+
+    <picture>
+      <source srcset="images/backDecstop.png" media="(min-width: 768px)"/>
+      <img alt="Фон" class="hero-bg" src="images/backMobile.png"/>
+    </picture>
+    <div class="hero-overlay"></div>
+
+    <nav class="navbar scrolled" id="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="nav-logo">FIT<span>FORGE</span></a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Головна</a>
+          <a href="form.html"  class="nav-link">Програма</a>
+          <a href="profile.html" class="nav-link active">Профіль</a>
+        </div>
+        <button class="burger" id="burger" aria-label="Меню">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html"   class="mobile-link">Головна</a>
+        <a href="form.html"    class="mobile-link">Програма</a>
+        <a href="profile.html" class="mobile-link">Профіль</a>
+      </div>
+    </nav>
+
+    <main class="profile-main">
+
+      <!-- Hero профілю -->
+      <div class="profile-hero">
+        <div class="profile-hero-inner">
+
+          <!-- Аватар -->
+          <div class="profile-avatar-wrap">
+            <img class="profile-avatar" id="profile-avatar" src="" alt="avatar" onerror="this.style.display='none'"/>
+            <div class="profile-initials" id="profile-initials"></div>
+          </div>
+
+          <!-- Ім'я + email -->
+          <div class="profile-identity">
+            <div class="profile-name-row">
+              <h1 class="profile-name" id="profile-name">…</h1>
+              <button class="btn-icon" id="btn-edit-name" title="Змінити ім'я">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 1.5l3 3L4 13H1v-3L9.5 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <p class="profile-email" id="profile-email"></p>
+          </div>
+
+          <!-- Logout -->
+          <button class="btn-ghost btn-logout" id="btn-logout">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M6 2H3a1 1 0 00-1 1v9a1 1 0 001 1h3M10 10l3-3-3-3M13 7H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Вийти
+          </button>
+
+        </div>
+
+        <!-- Статистика -->
+        <div class="profile-stats">
+          <div class="stat-card">
+            <span class="stat-val" id="stat-plans">—</span>
+            <span class="stat-label">Планів</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-card">
+            <span class="stat-val" id="stat-favorites">—</span>
+            <span class="stat-label">Улюблених вправ</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-card">
+            <span class="stat-val" id="stat-last">—</span>
+            <span class="stat-label">Останній план</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="profile-tabs">
+        <button class="profile-tab active" data-panel="panel-plans">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="2" y="2" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M5 7h5M5 9.5h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M5 4.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Мої плани
+        </button>
+        <button class="profile-tab" data-panel="panel-favorites">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 12.5S2 9 2 5.5a3 3 0 015.5-1.66A3 3 0 0113 5.5C13 9 7.5 12.5 7.5 12.5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Улюблені вправи
+        </button>
+      </div>
+
+      <!-- Panel: Plans -->
+      <div class="tab-panel active" id="panel-plans">
+        <div class="panel-header">
+          <h2 class="panel-title">Мої плани</h2>
+          <a href="form.html" class="btn-primary btn-sm-primary">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Новий план
+          </a>
+        </div>
+        <div class="plans-list" id="plans-list"></div>
+        <p class="list-empty" id="plans-empty" style="display:none">
+          Ще немає збережених планів.<br/>
+          <a href="form.html" class="link-accent">Створити перший →</a>
+        </p>
+      </div>
+
+      <!-- Panel: Favorites -->
+      <div class="tab-panel" id="panel-favorites">
+        <div class="panel-header">
+          <h2 class="panel-title">Улюблені вправи</h2>
+        </div>
+        <p class="favorites-hint">
+          Тисни <span class="heart-hint">♡</span> на будь-якій вправі в плані, щоб зберегти її тут.
+        </p>
+        <div class="favorites-grid" id="favorites-list"></div>
+        <p class="list-empty" id="favorites-empty" style="display:none">
+          Ще немає улюблених вправ.<br/>
+          <a href="form.html" class="link-accent">Відкрити план →</a>
+        </p>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script type="module" src="js/profile.js"></script>
+  <script>
+    const burger = document.getElementById("burger");
+    const menu   = document.getElementById("mobile-menu");
+    burger.addEventListener("click", () => {
+      burger.classList.toggle("open");
+      menu.classList.toggle("open");
+    });
+  </script>
+</body>
+</html>

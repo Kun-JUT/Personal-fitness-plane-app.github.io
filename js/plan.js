@@ -1,4 +1,12 @@
 // ===== PLAN.JS — Training plan renderer =====
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { doc, setDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ---- Auth guard ----
+onAuthStateChanged(auth, user => {
+  if (!user) window.location.href = "auth.html";
+});
 
 // ---- Config ----
 const WEEKDAYS_UK = ['Понеділок','Вівторок','Середа','Четвер','П\'ятниця','Субота','Неділя'];
@@ -362,7 +370,8 @@ function buildExCard(exName, dayIdx, exIdx, defaultSetsReps, more) {
         <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/>
         <path d="M7 6v4M7 4.5v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
       </svg>
-    </button>`;
+    </button>
+    <button class="ex-fav-btn" title="До улюблених">♡</button>`;
 
   // Checkbox click
   card.querySelector('.ex-check').addEventListener('click', e => {
@@ -377,9 +386,34 @@ function buildExCard(exName, dayIdx, exIdx, defaultSetsReps, more) {
     openModal(exName, parsed.sets, parsed.reps, muscle);
   });
 
+  // Favorite button
+  card.querySelector('.ex-fav-btn').addEventListener('click', async e => {
+    e.stopPropagation();
+    const user = auth.currentUser;
+    if (!user) return;
+    const favBtn = e.currentTarget;
+    const favId  = `${exName.replace(/[^a-zA-Z0-9Ѐ-ӿ]/g, '_').slice(0,40)}`;
+    const favRef = doc(db, "users", user.uid, "favorites", favId);
+    const snap   = await getDoc(favRef);
+    if (snap.exists()) {
+      await deleteDoc(favRef);
+      favBtn.textContent = '\u2661';
+      favBtn.classList.remove('fav-active');
+    } else {
+      await setDoc(favRef, {
+        name:   exName,
+        sets:   parsed.sets,
+        reps:   parsed.reps,
+        muscle: muscle.label || ''
+      });
+      favBtn.textContent = '\u2665';
+      favBtn.classList.add('fav-active');
+    }
+  });
+
   // Card click → modal (not checkbox area)
   card.addEventListener('click', e => {
-    if (e.target.closest('.ex-check') || e.target.closest('.ex-expand-btn')) return;
+    if (e.target.closest('.ex-check') || e.target.closest('.ex-expand-btn') || e.target.closest('.ex-fav-btn')) return;
     openModal(exName, parsed.sets, parsed.reps, muscle);
   });
 

@@ -1,5 +1,4 @@
 // ===== FIREBASE.JS — спільна ініціалізація =====
-// ВАЖЛИВО: замініть значення нижче на свої з Firebase Console
 // Project Settings → Your apps → firebaseConfig
 
 import { initializeApp }      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";

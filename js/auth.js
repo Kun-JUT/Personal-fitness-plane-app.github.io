@@ -27,15 +27,15 @@ const subtitleEl = document.getElementById("auth-subtitle");
 let isLogin = true;
 
 // ---- Google ----
-document.getElementById("btn-google").addEventListener("click", async () => {
-  clearError();
-  try {
-    await signInWithPopup(auth, googleProvider);
-    // onAuthStateChanged зробить redirect
-  } catch (e) {
-    showError(firebaseErrorMessage(e.code));
-  }
-});
+// document.getElementById("btn-google").addEventListener("click", async () => {
+//   clearError();
+//   try {
+//     await signInWithPopup(auth, googleProvider);
+//     // onAuthStateChanged зробить redirect
+//   } catch (e) {
+//     showError(firebaseErrorMessage(e.code));
+//   }
+// });
 
 // ---- Email / пароль ----
 submitBtn.addEventListener("click", async () => {

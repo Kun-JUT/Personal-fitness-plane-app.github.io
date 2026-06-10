@@ -1,12 +1,12 @@
 // ===== FIREBASE.JS — спільна ініціалізація =====
 // Project Settings → Your apps → firebaseConfig
 
-import { initializeApp }      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// import { initializeApp }      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+// import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+// import { getFirestore }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD71Jf3fEB0lPzYR4-D0ktdItK5WXbcCk",
+  apiKey: "AIzaSyD71Jf3fEB0lPzYR4-D0ktdItK5WXbcCko",
   authDomain: "fitforge-c8e54.firebaseapp.com",
   projectId: "fitforge-c8e54",
   storageBucket: "fitforge-c8e54.firebasestorage.app",

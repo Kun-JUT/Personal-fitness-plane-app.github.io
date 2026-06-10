@@ -6,7 +6,7 @@ import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/
 import { getFirestore }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD71Jf3fEB0lPzYR4-D0ktdItK5WXbcCko",
+  apiKey: "AIzaSyD71Jf3fEB0lPzYR4-D0ktdItK5WXbcCk",
   authDomain: "fitforge-c8e54.firebaseapp.com",
   projectId: "fitforge-c8e54",
   storageBucket: "fitforge-c8e54.firebasestorage.app",
@@ -18,5 +18,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth           = getAuth(app);
-export const db             = 
+export const db             = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
